@@ -1,38 +1,37 @@
-// var WebSocketServer = require('ws').Server
-//   , http = require('http')
-//   , express = require('express')
-//   , app = express();
+var WebSocketServer = require('ws').Server
+  , http = require('http')
+  , express = require('express')
+  , app = express();
  var exec = require('child_process').exec;
-// var child = exec('tail -f ~/Projects/cafex/cafe-x-backend/nohup.out');
 
-// app.set('views', __dirname + '/views/pages');
-// app.use(express.static(__dirname + '/public'));
+app.set('views', __dirname + '/views/pages');
+app.use(express.static(__dirname + '/public'));
 
-// app.get('/', function(req, res) {
-//   res.render('index.ejs');
-// });
+app.get('/', function(req, res) {
+  res.render('index.ejs');
+});
 
-// app.use(function(req, res, next) {
-//     var err = new Error('Not Found');
-//     err.status = 404;
-//     next(err);
-// });
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
 
-// app.use(function(err, req, res, next) {
-//     res.status(err.status || 500);
-//     console.log(err.message);
-// });
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    console.log(err.message);
+});
 
-// var server = http.createServer(app);
-// server.listen(3000);
+var server = http.createServer(app);
+server.listen(3000);
 
-// var wss = new WebSocketServer({server: server});
+var wss = new WebSocketServer({server: server});
 
-// wss.broadcast = function broadcast(data) {
-//   wss.clients.forEach(function each(client) {
-//     client.send(data);
-//   });
-// };
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    client.send(data);
+  });
+};
 
 setInterval(function() {
   jps();
