@@ -26,56 +26,56 @@ app.use(function(err, req, res, next) {
 var server = http.createServer(app);
 server.listen(8888);
 
-// var wss = new WebSocketServer({server: server});
+var wss = new WebSocketServer({server: server});
 
-// wss.broadcast = function broadcast(data) {
-//   wss.clients.forEach(function each(client) {
-//     client.send(data);
-//   });
-// };
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    client.send(data);
+  });
+};
 
-// function jps() {
-//   var newChild = exec('ps -C java -o pid');
+function jps() {
+  var newChild = exec('ps -C java -o pid');
 
-//   newChild.stdout.on('data', function(data) {
-//     console.log('stdout: ' + data);
-//       // wss.broadcast(data);
-//       parse(data);
-//   });
-//   newChild.stderr.on('data', function(data) {
-//     console.log('data: ' + data);
-//     // wss.broadcast(data);
+  newChild.stdout.on('data', function(data) {
+    console.log('stdout: ' + data);
+      // wss.broadcast(data);
+      parse(data);
+  });
+  newChild.stderr.on('data', function(data) {
+    console.log('data: ' + data);
+    // wss.broadcast(data);
     
-//   });
-//   newChild.on('close', function(code) {
-//     console.log('closing code: ' + code);
-//   });
-// }
+  });
+  newChild.on('close', function(code) {
+    console.log('closing code: ' + code);
+  });
+}
 
-// function parse(data) {
-//   var array = data.split('\n');
-//   for(var i = 0; i < array.length; i++) {
-//     var trimmed = array[i].trim();
+function parse(data) {
+  var array = data.split('\n');
+  for(var i = 0; i < array.length; i++) {
+    var trimmed = array[i].trim();
 
-//     if(trimmed.length > 0 && trimmed != 'PID') {
-//       console.log('trimmed: ', trimmed);
-//       var spawn = exec('tail -f /proc/' + trimmed + '/fd/1')
+    if(trimmed.length > 0 && trimmed != 'PID') {
+      console.log('trimmed: ', trimmed);
+      var spawn = exec('tail -f /proc/' + trimmed + '/fd/1')
 
-//       spawn.stdout.on('data', function(data) {
-//       console.log('stdout: ' + data);
-//           wss.broadcast(data);
-//       });
-//       spawn.stderr.on('data', function(data) {
-//         console.log('data: ' + data);
-//         wss.broadcast(data);
-//       });
-//       spawn.on('close', function(code) {
-//         console.log('closing code: ' + code);
-//       });
-//     }
-//   }
-// }
+      spawn.stdout.on('data', function(data) {
+      console.log('stdout: ' + data);
+          wss.broadcast(data);
+      });
+      spawn.stderr.on('data', function(data) {
+        console.log('data: ' + data);
+        wss.broadcast(data);
+      });
+      spawn.on('close', function(code) {
+        console.log('closing code: ' + code);
+      });
+    }
+  }
+}
 
-// setInterval(function() {
-//   jps();
-// }, 1000);
+setInterval(function() {
+  jps();
+}, 1000);
