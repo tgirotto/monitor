@@ -62,21 +62,19 @@ function parse(data) {
 
     if(trimmed.length > 0 && trimmed != 'PID') {
       console.log('trimmed: ', trimmed);
-      if(temp[1] == 'jar') {
-        var spawn = exec('tail -f /proc/' + trimmed + '/fd/1')
+      var spawn = exec('tail -f /proc/' + trimmed + '/fd/1')
 
-        spawn.stdout.on('data', function(data) {
-        console.log('stdout: ' + data);
-            wss.broadcast(data);
-        });
-        spawn.stderr.on('data', function(data) {
-          console.log('data: ' + data);
+      spawn.stdout.on('data', function(data) {
+      console.log('stdout: ' + data);
           wss.broadcast(data);
-        });
-        spawn.on('close', function(code) {
-          console.log('closing code: ' + code);
-        });
-      }
+      });
+      spawn.stderr.on('data', function(data) {
+        console.log('data: ' + data);
+        wss.broadcast(data);
+      });
+      spawn.on('close', function(code) {
+        console.log('closing code: ' + code);
+      });
     }
   }
 }
