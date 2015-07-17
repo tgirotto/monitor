@@ -38,7 +38,7 @@ setInterval(function() {
 }, 3000);
 
 function jps() {
-  var newChild = exec('jps');
+  var newChild = exec('ps -C java -o pid');
 
   newChild.stdout.on('data', function(data) {
     console.log('stdout: ' + data);
@@ -58,13 +58,12 @@ function jps() {
 function parse(data) {
   var array = data.split('\n');
   for(var i = 0; i < array.length; i++) {
-    if(array[i].length > 0) {
-      var temp = array[i].split(' ');
-      console.log('pid', temp[0]);
-      console.log('type', temp[1]);
+    var trimmed = array[i].trim();
 
+    if(trimmed.length > 0 && trimmed != 'PID') {
+      console.log('trimmed: ', trimmed);
       if(temp[1] == 'jar') {
-        var spawn = exec('tail -f /proc/' + temp[0] + '/fd/1')
+        var spawn = exec('tail -f /proc/' + trimmed + '/fd/1')
 
         spawn.stdout.on('data', function(data) {
         console.log('stdout: ' + data);
