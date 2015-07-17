@@ -8,6 +8,7 @@ app.set('views', __dirname + '/views/pages');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
+  console.log('Serving page');
   res.render('index.ejs');
 });
 
@@ -35,7 +36,7 @@ wss.broadcast = function broadcast(data) {
 
 setInterval(function() {
   jps();
-}, 3000);
+}, 1000);
 
 function jps() {
   var newChild = exec('ps -C java -o pid');
