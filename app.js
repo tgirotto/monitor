@@ -24,7 +24,7 @@ app.use(function(err, req, res, next) {
 });
 
 var server = http.createServer(app);
-server.listen(3000);
+server.listen(8888);
 
 var wss = new WebSocketServer({server: server});
 
