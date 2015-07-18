@@ -75,7 +75,7 @@ function parse() {
 
     spawn.stdout.on('data', function(data) {
     console.log('stdout: ' + data);
-        wss.broadcast(data);
+        wss.broadcast(data + '<br>');
     });
     spawn.stderr.on('data', function(data) {
       console.log('data: ' + data);

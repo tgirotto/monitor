@@ -42,7 +42,7 @@ $(document).ready(function() {
 				</div> \
 			</div> \
 			<div id="terminal-title"> \
-				user@localhost:~ \
+				user@cafeX \
 			</div> \
 		</div> \
 	</div> \

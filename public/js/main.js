@@ -16,6 +16,8 @@ $( document ).ready(function() {
 
 	// Log messages from the server
 	connection.onmessage = function(e) {
-	  	document.getElementById('terminal-body').innerHTML += e.data;
+		var terminal = document.getElementById('terminal-body');
+	  	terminal.innerHTML += e.data;
+	  	terminal.scrollTop = terminal.scrollHeight;
 	};
 });
