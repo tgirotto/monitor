@@ -1,27 +1,32 @@
+<!-- views/pages/index.ejs -->
+
 <!DOCTYPE html>
-<html>
-	<head>
-	</head>
-	<body>
-		<div id="container"></div>
-		<script>
-			console.log("Running...");
-			var connection = new WebSocket('ws://104.199.153.65:8888');
+<html lang="en">
+    <head>
+        <% include ../partials/head %>
+    </head>
+    <body style="min-height: 2000px; padding-top: 70px;">
+        
+        <% include ../partials/header %>
 
-			// When the connection is open, send some data to the server
-			connection.onopen = function () {
-			  connection.send('Ping'); // Send the message 'Ping' to the server
-			};
+        <div class="col-md-12">
+		    <div class="row" style="height:500px;">
+		        <div class="col-sm-3">
+		            <div class="panel panel-default">
+		            	<div class="panel-heading">
+		            		Panel heading
+		            	</div>
+		            	<div class="panel-body">
+					    	Basic panel example
+					    </div>
+		            </div>
+		        </div>
+		        <div class="col-sm-9">
+		            <div class="cssterm">connecting...</div>
+		        </div>
+		    </div>
+		</div>
 
-			// Log errors
-			connection.onerror = function (error) {
-			  console.log('WebSocket Error ' + error);
-			};
-
-			// Log messages from the server
-			connection.onmessage = function (e) {
-			  document.getElementById('container').innerHTML += e.data;
-			};
-		</script>
-	</body>
+        <% include ../partials/footer %>
+    </body>
 </html>
